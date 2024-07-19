@@ -92,6 +92,10 @@
       "join": "%base% +connect %ip% [[+password %password%]]"
     },
     {
+      "name": "Palworld",
+      "executable": "Palworld\\palworld.exe"
+    },
+    {
       "name": "Quake 3",
       "executable": "Q3\\quake3.exe",
       "launch": "+set com_introplayed 1",
