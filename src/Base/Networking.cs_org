@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using static NtsLib.Utils;
+using static GameManager.Base.Utils;
+using GameManager.Data_Objects;
+using GameManager.Enums;
+using Newtonsoft.Json;
+
+namespace GameManager.Base {
+  public class Networking {
+    private TcpListener listener;
+    private const int port = 5012;
+
+    public void StartServer() {
+      try {
+        listener = new TcpListener(IPAddress.Any, port);
+        listener.Start();
+        ListenForClients();
+      } catch (Exception e) {
+        Dialog("Exception: " + e.Message);
+      }
+    }
+
+    private void RefreshClients() {
+      try {
+        foreach (Client client in cfg.Clients) {
+          if (!client.IP.IsAlive()) {
+            client.Online = false;
+            continue;
+          }
+
+          Packet pkt = new Packet();
+
+        }
+      } catch (Exception ex) {
+        Dialog("** Exception during GetClients:\n\n" + ex.Message);
+      }
+    }
+
+    private void ListenForClients() {
+      Task.Run(async () => {
+        while (true) {
+          try {
+            var client = await listener.AcceptTcpClientAsync();
+            var _ = HandleClientAsync(client).ContinueWith(task => {
+              Dialog("s");
+              if (task.Exception != null) {
+                Dialog("Exception: " + task.Exception.Flatten().InnerException.Message);
+              }
+            }, TaskContinuationOptions.OnlyOnFaulted);
+          } catch (Exception e) {
+            Dialog("Exception: " + e.Message);
+          }
+        }
+      });
+    }
+
+    private async Task HandleClientAsync(TcpClient client) {
+      var stream = client.GetStream();
+      var buffer = new byte[4096]; // Adjust buffer size as necessary
+      try {
+        StringBuilder builder = new StringBuilder();
+        int bytesRead;
+        while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0) {
+          // Decode the received bytes to string using UTF8
+          var receivedString = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+          builder.Append(receivedString);
+
+          // Check if the received string ends with a new line, which can be used as a delimiter
+          if (receivedString.EndsWith("\n")) {
+            // Remove the delimiter for clean JSON parsing
+            var json = builder.ToString().TrimEnd('\n');
+            // Deserialize the JSON string back into a Packet object
+            var packet = JsonConvert.DeserializeObject<Packet>(json);
+            ProcessReceivedData(packet);
+            // Clear the builder after processing the packet
+            builder.Clear();
+          }
+        }
+      } catch (Exception e) {
+        Dialog("Exception: " + e.Message);
+      } finally {
+        client.Close();
+      }
+    }
+
+    private void ProcessReceivedData(Packet packet) {
+      Dialog("Packet received from " + packet.Name);
+    }
+
+    private void ProcessReceivedData(string data) {
+      Dialog("Data processed: " + data);
+    }
+
+    public async Task Send(string ipAddress, Packet packet) {
+      try {
+        string json = JsonConvert.SerializeObject(packet);
+
+        byte[] buffer = Encoding.UTF8.GetBytes(json);
+
+        using (var client = new TcpClient()) {
+          await client.ConnectAsync(ipAddress, port);
+          using (var stream = client.GetStream()) {
+            await stream.WriteAsync(buffer, 0, buffer.Length);
+          }
+        }
+      } catch (Exception e) {
+        Dialog("Exception during Send: " + e.Message);
+      }
+    }
+
+    public void JoinServer(string server) {
+      try {
+        Packet pkt = new Packet();
+        pkt.Command = Command.JoinNetwork;
+        pkt.Transmit(server);
+      } catch (Exception ex) {
+        Dialog("** Exception during JoinServer:\n\n" + ex.Message);
+      }
+    }
+  }
+}

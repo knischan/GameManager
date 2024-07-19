@@ -1,0 +1,150 @@
+
+D:\Dropbox\Projects\GameManager\Base/DataPanel.cs
+[61]:     //       new Dialog("Could not load source!", "img:alert").Show();
+[84]:     //         new Dialog("A source with that name already exists!", "img:alert").Show();
+[110]:     //     if (new Dialog("Are you sure?", "Yes,No").Show().Chose("No")) return;
+[272]:             new Dialog(fieldName + " needs a value!").Show();
+[278]:             new Dialog(fieldName + " must be a numeric value!").Show();
+[285]:             new Dialog("The file specified in " + fieldName + " does not exist!").Show();
+[364]:             new Dialog("** Corrupt control tag for " + ctrl.Name).Show();
+[370]:               new Dialog("** Corrupt control tag for " + ctrl.Name).Show();
+[384]:             new Dialog("** Corrupt control tag for " + ctrl.Name).Show();
+[393]:             new Dialog("** Corrupt control tag for " + ctrl.Name).Show();
+
+D:\Dropbox\Projects\GameManager\Base/GameControl.cs
+[18]:           Dialog("Cannot launch game; no game was passed to the Launch method!");
+[47]:           Dialog("Cannot launch game; executable is missing!\n\n[" + exe + "]");
+[51]:           Dialog("Cannot launch game; working directory is missing!\n\n[" + dir + "]");
+[61]:         Dialog("** Exception during Launch:\n\n" + ex.Message);
+[76]:         Dialog("** Exception during Terminate:\n\n" + ex.Message);
+
+D:\Dropbox\Projects\GameManager\Base/SocketServer.cs
+[64]:             Dialog("Attempted to send payload with no address!");
+[79]:             if (debugMode) Dialog("Sent " + payload.Command.ToString() + " to " + ipAddress);
+[87]:         Dialog("** Exception during Transmit: " + ex.Message);
+[95]:       if (debugMode) Dialog("Received a " + payload.Command.ToString() + " payload from client: " + (client == null ? "null" : client.Name));
+[172]:         Dialog("** Exception during JoinNetwork:\n\n" + ex.Message);
+
+D:\Dropbox\Projects\GameManager\Base/Utils.cs
+[45]:               new Dialog("You need to pass the config file after /cfg!").Show();
+[60]:           Dialog("I ran into a problem creating the application data folder (" + activeConfigPath + "):" + Environment.NewLine + Environment.NewLine + ex.Message);
+[66]:           new Dialog("No configuration file was found.  Please configure the product before use.").Show();
+[68]:             if (config.ShowDialog() == DialogResult.Cancel) ExitError("Configuration was aborted; cancelling");
+[79]:           Dialog("** Exception during server initialization: " + ex.Message);
+[83]:         Dialog("Exception during Init: " + ex.Message);
+[95]:         new Dialog("Exception during GetConfiguration: " + ex.Message).Show();
+[109]:         new Dialog("Exception during SetConfiguration:" + ex.Message).Show();
+[117]:         Dialog("** Exception during Transmit:\n\n" + ex.Message);
+[144]:         myform.ShowDialog();
+[173]:       Dialog(msg);
+[207]:         Dialog("** Exception during LogUI:\n\n" + ex.Message);
+
+D:\Dropbox\Projects\GameManager\Data Objects/Configuration.cs
+[62]:         Dialog("** Exception during GetGame:\n\n" + ex.Message);
+[71]:         Dialog("** Exception during DeleteGame:\n\n" + ex.Message);
+[85]:         Dialog("** Exception during SetGame:\n\n" + ex.Message);
+[94]:         Dialog("** Exception during SetDefaultIP:\n\n" + ex.Message);
+[132]:         Dialog("** Exception during DeleteClient:\n\n" + ex.Message);
+[146]:         Dialog("** Exception during SetClient:\n\n" + ex.Message);
+
+D:\Dropbox\Projects\GameManager\Data Objects/DialogReturn.cs
+[8]:   public class DialogReturn {
+[11]:     public DialogResult Result { get; set; } = DialogResult.OK;
+
+D:\Dropbox\Projects\GameManager\UI/Config.cs
+[121]:       DialogResult = DialogResult.Cancel;
+[156]:       new Dialog("Saved!").Show();
+[157]:       DialogResult = DialogResult.OK;
+[220]:         Dialog("I could not load this color!");
+[300]:         Dialog("I could not get that color!");
+[306]:         Dialog("I could not get that color!");
+[340]:       if (new Dialog("This will wipe out all color customizations.\n\nAre you sure?", "Yes,No").Show().Button.Matches("no")) return;
+[364]:           Dialog("Could not load this game record!");
+[418]:       if (GetDialogButton("Are you sure?", "Yes,No").Matches("no")) return;
+[427]:         Dialog("Name must be provided!");
+[432]:         Dialog("Executable must be provided!");
+[439]:         Dialog("Cannot save; that name is in use!");
+[445]:         Dialog("The specified icon is not valid!");
+[469]:           Dialog("Could not import icon from override file!");
+[493]:         Dialog("** Exception during LoadBindIPs:\n\n" + ex.Message);
+[504]:       Dialog(report.IsEmpty() ? "Everything checks out!" : report);
+[510]:           Dialog("You need to connect to a server first!");
+[514]:         if (GetDialogButton("Are you sure?\n\nThis will overwrite your current game config.", "Yes,No").Matches("no")) return;
+[518]:         Dialog("** Exception during RequestGames:\n\n" + ex.Message);
+[524]:         Dialog("OK, I'll scan your drives to search for games.\n\nThis may take a minute, please wait for the next dialog to pop up.");
+[533]:         Dialog(Pluralize("!# game!s detected, ", results) + Pluralize("!# new game!s added to system.", added));
+[536]:         Dialog("** Exception during ScanDrives:\n\n" + ex.Message);
+[557]:           Dialog("Could not load client!");
+[585]:         Dialog("There must be a system name!");
+[590]:         Dialog("Client address cannot be empty!");
+[597]:         Dialog("That doesn't appear to be a valid IP!");
+[610]:       if (GetDialogButton("Are you sure?", "Yes,No").Matches("no")) return;
+
+D:\Dropbox\Projects\GameManager\UI/Dialog.cs
+[14]:   public class Dialog {
+[22]:     //   new Dialog("Message to display").Show();
+[25]:     //   string name = new Dialog("What is your name?", "OK", true).Show().Input;
+[27]:     //   Show() returns a DialogReturn which has the following properties:
+[30]:     //     DialogResult = The form's DialogResult
+[64]:     // For any values displayed, you can tokenize dialog parameters as %p:(parameter%.  So to make an error for invalid max numeric for example:
+[65]:     //   new Dialog("What is your age?", "input", "input.numeric.max:65", "input.numeric.max.error:You're too old; can't be older than %p:input.numeric.max%!").Show();
+[90]:     public Dialog(string prompt) {
+[96]:     public Dialog(string prompt, string buttons, bool hasInput = false) {
+[106]:     public Dialog(string prompt, string buttons, bool hasInput = false, params string[] parms) {
+[116]:     public Dialog(string prompt, string buttons, params string[] parms) {
+[122]:     public DialogReturn Show() {
+[126]:         DialogReturn ret = new DialogReturn();
+[129]:         Form dialog = new Form();
+[130]:         dialog.Width = formWidth;
+[131]:         dialog.Font = new Font("Microsoft Sans Serif", 12F);
+[132]:         dialog.StartPosition = FormStartPosition.CenterScreen;
+[155]:           dialog.Controls.Add(pb);
+[161]:           buf += "dialog.Controls.Add(pb);" + Environment.NewLine;
+[165]:         buf += "Form dialog = new Form();" + Environment.NewLine;
+[166]:         buf += "dialog.Width = " + formWidth + "; " + Environment.NewLine;
+[167]:         buf += "dialog.Font = new Font(\"Microsoft Sans Serif\", 12F);" + Environment.NewLine;
+[168]:         buf += "dialog.StartPosition = FormStartPosition.CenterScreen;" + Environment.NewLine;
+[178]:         dialog.Controls.Add(label);
+[179]:         label.Location = new Point((dialog.Width - label.Width) / 2, formheight);
+[190]:         buf += "dialog.Controls.Add(label);" + Environment.NewLine;
+[191]:         buf += "label.Location = new Point(" + ((dialog.Width - label.Width) / 2) + ", 20);" + Environment.NewLine;
+[205]:               dialog.Close();
+[208]:           dialog.Controls.Add(inputControl);
+[220]:         buf += "    dialog.Close();" + Environment.NewLine;
+[223]:         buf += "dialog.Controls.Add(inputControl);" + Environment.NewLine;
+[238]:               dialog.Close();
+[248]:             buf += "    dialog.Close();" + Environment.NewLine;
+[254]:           flp.Location = new Point((dialog.Width - flp.Width) / 2, formheight);
+[255]:           dialog.Controls.Add(flp);
+[257]:           buf += "flp.Location = new Point(" + ((dialog.Width - flp.Width) / 2) + ", " + formheight + ");" + Environment.NewLine;
+[258]:           buf += "dialog.Controls.Add(flp);" + Environment.NewLine;
+[261]:         dialog.Size = new Size(formWidth, formheight + 100);
+[262]:         buf += "dialog.Size = new Size(" + formWidth + ", " + (formheight + 100) + ");" + Environment.NewLine;
+[264]:         dialog.ShowDialog();
+[267]:           new Dialog(TokenizedString(GetOrDefaultOpt("input.req.error", defaults["input.req.error"])), "OK").Show();
+[272]:           new Dialog(TokenizedString(GetOrDefaultOpt("input.phone.error", defaults["input.phone.error"])), "OK").Show();
+[277]:           new Dialog(TokenizedString(GetOrDefaultOpt("input.phone.error", defaults["input.phone.error"])), "OK").Show();
+[282]:           new Dialog(TokenizedString(GetOrDefaultOpt("input.url.error", defaults["input.url.error"])), "OK").Show();
+[288]:             new Dialog(TokenizedString(GetOrDefaultOpt("input.numeric.error", defaults["input.numeric.error"])), "OK").Show();
+[294]:             new Dialog(TokenizedString(GetOrDefaultOpt("input.numeric.max.error", defaults["input.numeric.max"])), "OK").Show();
+[299]:             new Dialog(TokenizedString(GetOrDefaultOpt("input.numeric.min.error", defaults["input.numeric.min"])), "OK").Show();
+
+D:\Dropbox\Projects\GameManager\UI/Primary.cs
+[148]:         if (c.ShowDialog() != DialogResult.OK) return;
+[199]:         Dialog($"Process {process["ProcessId"]} has been killed.");
+[238]:         Dialog("You haven't selected any clients!");
+[244]:         Dialog("Could not load this game from config!");
+[269]:           Dialog("You haven't selected any clients!");
+[275]:           Dialog("Could not load this game from config!");
+[285]:         Dialog("** Exception during TerminateGame:\n\n" + ex.Message);
+[304]:       Dialog dlg = new Dialog("Server address:", "OK,Cancel", "input.default::" + cfg.Server);
+[305]:       DialogReturn dlr = dlg.Show();
+[310]:         Dialog("The specified server is not pinging!");
+[339]:         Dialog("Could not load this game from config!");
+[354]:         Dialog("You need to connect to a server first!");
+[358]:       if (GetDialogButton("Are you sure?\n\nThis will overwrite your current game config.", "Yes,No").Matches("no")) return;
+[422]:         Dialog("** Exception during PayloadHandler:\n\n" + ex.Message);
+[434]:         Dialog("** Exception during SetupExitMonitor:\n\n" + ex.Message);
+[530]:         Dialog("Games received from " + client.Name);
+[546]:       Dialog("Imported games from server");
+[556]:         Dialog("** Exception during ServerConnectionToggle:\n\n" + ex.Message);

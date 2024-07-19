@@ -1,0 +1,147 @@
+{
+  "config": {
+    "skipdrives": null,
+    "rootfolders": [
+      "Program Files",
+      "Program Files (x86)",
+      "Games"
+    ]
+  },
+  "games": [
+    {
+      "name": "Battlefield 1942: DC Extended",
+      "executable": "BF1942\\bf1942.exe",
+      "signature": [
+        {
+          "folder": "BF1942\\Mods\\DC_Extended"
+        }
+      ],
+      "launch": "+restart 1 +game DC_Extended",
+      "join": "%base% +joinServer %ip%:14567 [[+password %password%]]"
+    },
+    {
+      "name": "Battlefield 1942: DC Final",
+      "executable": "BF1942\\bf1942.exe",
+      "signature": [
+        {
+          "folder": "BF1942\\Mods\\DC_Final"
+        }
+      ],
+      "launch": "+restart 1 +game DC_Final",
+      "join": "%base% +joinServer %ip%:14567 [[+password %password%]]"
+    },
+    {
+      "name": "Battlefield 1942: Desert Combat",
+      "executable": "BF1942\\bf1942.exe",
+      "signature": [
+        {
+          "folder": "BF1942\\Mods\\DesertCombat"
+        }
+      ],
+      "launch": "+restart 1 +game DesertCombat",
+      "join": "%base% +joinServer %ip%:14567 [[+password %password%]]"
+    },
+    {
+      "name": "Call of Duty",
+      "executable": "COD\\CodMP.exe",
+      "launch": "-novid",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Descent",
+      "executable": "Descent\\D1X-Redux.exe"
+    },
+    {
+      "name": "Doom 1",
+      "executable": "Doom\\Legacy.exe",
+      "icon": "doom.ico"
+    },
+    {
+      "name": "Doom 2",
+      "executable": "Doom2\\Legacy.exe",
+      "icon": "doom.ico"
+    },
+    {
+      "name": "Half Life 1",
+      "executable": "Steam\\steamapps\\common\\half-life\\hl.exe",
+      "launch": "-novid",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Half Life 2",
+      "executable": "Steam\\steamapps\\common\\half-life 2 deathmatch\\hl2.exe",
+      "launch": "-novid -game \"%folder%\\hl2mp\"",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Jedi Knight II: Jedi Outcast",
+      "executable": "JK2\\GameData\\jk2mp.exe",
+      "launch": "-novid",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Left 4 Dead",
+      "executable": "Steam\\steamapps\\common\\left 4 dead\\left4dead.exe",
+      "launch": "-novid",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Left 4 Dead 2",
+      "executable": "Steam\\steamapps\\common\\left 4 dead 2\\left4dead2.exe",
+      "launch": "-novid",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Quake 3",
+      "executable": "Q3\\quake3.exe",
+      "launch": "+set com_introplayed 1",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Red Faction",
+      "executable": "RF\\DF\\DashFactionLauncher.exe",
+      "launch": "-game",
+      "join": "%base% -url rf://%ip%:7755"
+    },
+    {
+      "name": "Return to Castle Wolfenstein",
+      "executable": "RTCW\\WolfMP.exe",
+      "launch": "-novid",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Sons of the Forest",
+      "executable": "Steam\\steamapps\\common\\Sons of the Forest\\SonsOfTheForest.exe"
+    },
+    {
+      "name": "SWAT 4",
+      "executable": "SWAT 4\\Content\\System\\Swat4.exe"
+    },
+    {
+      "name": "Total Annihilation",
+      "executable": "TA\\TotalA.exe"
+    },
+    {
+      "name": "Unreal Tournament",
+      "executable": "UT\\System\\UnrealTournament.exe",
+      "launch": "-nomoviestartup",
+      "join": "%base% -connect=%ip% [[-password=%password%]]"
+    },
+    {
+      "name": "Unreal Tournament 2004",
+      "executable": "UT2004\\System\\UT2004.exe",
+      "launch": "-nointro",
+      "join": "%base% -connect=%ip% [[-password=%password%]]"
+    },
+    {
+      "name": "Voyager: Elite Force",
+      "executable": "Voyager\\stvoyHM.exe",
+      "launch": "-novid",
+      "join": "%base% +connect %ip% [[+password %password%]]"
+    },
+    {
+      "name": "Worms: Armageddon",
+      "executable": "Steam\\steamapps\\common\\Worms Armageddon\\wa.exe"
+    }
+  ]
+}
